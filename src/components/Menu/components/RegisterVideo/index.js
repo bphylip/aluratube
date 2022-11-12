@@ -1,5 +1,10 @@
 import React from "react";
 import { StyledRegisterVideo } from "./styles";
+import { createClient } from "@supabase/supabase-js";
+
+function getThumbnail(url) {
+    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+}
 
 
 //Custom Hook
@@ -16,17 +21,21 @@ function useForm(propsDoForm) {
                 [name]: value,
             })
         },
-        clearForm(){
+        clearForm() {
             setValues({})
         }
     }
 }
 //
 
+const PROJECT_URL = "https://elrhpherajkxlwxkuulr.supabase.co"
+const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVscmhwaGVyYWpreGx3eGt1dWxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgyMTA0OTcsImV4cCI6MTk4Mzc4NjQ5N30.bqH1QFk_0l1SQb1uVoRcplvBbTsFIFtYU7ucrsf49Kk"
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY)
+
 export default function RegisterVideo() {
 
     const formCadastro = useForm({
-        initialValues: { titulo: "", url: "" }
+        initialValues: { titulo: "Frostpunk - Neve e Steak tartare", url: "https://img.youtube.com/vi/O8jtAyPuhNg/hqdefault.jpg" }
     })
     const [formVisivel, setFormVisivel] = React.useState(false);
 
@@ -44,6 +53,20 @@ export default function RegisterVideo() {
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         console.log(formCadastro.values);
+
+                        supabase.from("video").insert({
+                            title: formCadastro.values.titulo,
+                            url: formCadastro.values.url,
+                            thumb: getThumbnail(formCadastro.values.url),
+                            playlist: "jogos",
+                        })
+                        .then((oq)=>{
+                            console.log(oq)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+
                         setFormVisivel(false);
                         formCadastro.clearForm();
                     }}>
