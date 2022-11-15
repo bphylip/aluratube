@@ -80,7 +80,10 @@ const StyledHeader = styled.div`
     img {
         width: 80px;
         height: 80px;
-        border-radius: 50%
+        border-radius: 50%;
+        border-style: solid;
+        border-width: 4px;
+        border-color: ${({ theme }) => theme.backgroundLevel2};
     }
     .user-info{
         
@@ -94,10 +97,23 @@ const StyledHeader = styled.div`
 ` ;
 
 const StyledBanner = styled.div`
-    /* background-image: ""; */
+
+    /* Código Original
+    background-image: ""; 
     background-color: red;
     background-image: url(${({ banner }) => banner});
-    height: 230px;
+    height: 230px; */
+
+    //Ajuste de banner
+    width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-y: none;
+        height: 300px;
+        background-image: url(${({ banner }) => banner});
+        background-size: 100%;
+        background-position: 50% 50%;
+    //
     `;
 
 function Header() {

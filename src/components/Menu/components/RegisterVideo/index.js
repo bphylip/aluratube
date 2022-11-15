@@ -35,7 +35,7 @@ const supabase = createClient(PROJECT_URL, PUBLIC_KEY)
 export default function RegisterVideo() {
 
     const formCadastro = useForm({
-        initialValues: { titulo: "Frostpunk - Neve e Steak tartare", url: "https://img.youtube.com/vi/O8jtAyPuhNg/hqdefault.jpg" }
+        initialValues: { titulo: "", url: "" }
     })
     const [formVisivel, setFormVisivel] = React.useState(false);
 
